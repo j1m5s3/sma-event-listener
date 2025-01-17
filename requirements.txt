@@ -1,0 +1,4 @@
+web3
+eth_abi
+pydantic
+colorlog~=5.0.1

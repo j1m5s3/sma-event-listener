@@ -1,0 +1,14 @@
+{
+  "ETH_MAIN": {
+    "ALCHEMY": {
+      "TEST": {
+        "https": "https://eth-sepolia.g.alchemy.com/v2/<API_KEY>",
+        "ws": "wss://eth-sepolia.g.alchemy.com/v2/<API_KEY>"
+      },
+      "MAIN": {
+        "https": "https://eth-mainnet.g.alchemy.com/v2/<API_KEY>",
+        "ws": "wss://eth-mainnet.g.alchemy.com/v2/<API_KEY>"
+      }
+    }
+  }
+}
