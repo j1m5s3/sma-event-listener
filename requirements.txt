@@ -2,3 +2,4 @@ web3
 eth_abi
 pydantic
 colorlog~=5.0.1
+python-dotenv~=1.0.0
