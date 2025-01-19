@@ -1,16 +1,16 @@
 from models.events import SMACreated
 from utils.constants.enums import ConfiguredContracts, Events
-from interfaces.contracts.base.base_listener_interface import BaseListenerInterface
+from interfaces.contract_event_listeners.base.base_listener_interface import BaseListenerInterface
 
 class SMAFactoryListenerInterface(BaseListenerInterface):
     """
     SMA Factory Listener Interface
     """
 
-    event_abi: str  = "SMACreated(address,address,uint256,string)"
-    event_name: str = Events.SMACreated.name
+    def __init__(self, ws_uri: str, contract_address: str, event_abi: str, event_name: str):
+        self.event_abi = event_abi
+        self.event_name = event_name
 
-    def __init__(self, ws_uri: str, contract_address: str):
         super().__init__(
             ws_uri=ws_uri,
             event_definition=self.event_abi,
@@ -25,5 +25,5 @@ class SMAFactoryListenerInterface(BaseListenerInterface):
 
         :return: Unpacked event
         """
-        sma_created = SMACreated(raw_event=event_dict)
-        return sma_created.model_dump()
+        event_model = SMACreated(raw_event=event_dict)
+        return event_model.model_dump()

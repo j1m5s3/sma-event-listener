@@ -1,0 +1,51 @@
+import asyncio
+
+from pywin.mfc.object import Object
+
+from app_logger.logger import Logger
+from config_loader import (
+    RPC_URL,
+    CONTRACT_ADDRESSES
+)
+from utils.constants.contract_events import EVENT_DEFINITIONS
+from utils.constants.enums import Events, ConfiguredContracts
+from interfaces.contract_event_listeners.base.base_listener_interface import BaseListenerInterface
+from interfaces.contract_event_listeners.factory_listener_interface import SMAFactoryListenerInterface
+from interfaces.contract_event_listeners.management_registry_listener_interface import SMAManagementRegistryListenerInterface
+
+logger: Logger = Logger(section_name=f"{__name__}")
+
+
+def get_listener_interface(event: Events) -> BaseListenerInterface:
+    """
+    Get the listener interface for the given event name
+
+    :param event: Enum representing the event
+
+    :return: Listener interface
+    """
+    if event in [Events.SMACreated]:
+        listener_interface: SMAFactoryListenerInterface = SMAFactoryListenerInterface(
+            ws_uri=RPC_URL,
+            contract_address=CONTRACT_ADDRESSES[ConfiguredContracts.SMA_FACTORY],
+            event_abi=EVENT_DEFINITIONS[event],
+            event_name=event.name
+        )
+    elif event in [Events.ManagementStatusChanged]:
+        listener_interface: SMAManagementRegistryListenerInterface = SMAManagementRegistryListenerInterface(
+            ws_uri=RPC_URL,
+            contract_address=CONTRACT_ADDRESSES[ConfiguredContracts.SMA_MANAGEMENT_REGISTRY],
+            event_abi=EVENT_DEFINITIONS[event],
+            event_name=event.name
+        )
+    else:
+        raise NotImplementedError(f"Event {event.name} is not implemented")
+
+    return listener_interface
+
+
+if __name__ == "__main__":
+    logger.info(f"Running factory event listeners")
+    #event = Events.SMACreated
+    event = Events.ManagementStatusChanged
+    asyncio.run(get_listener_interface(event).subscribe_to_event())
