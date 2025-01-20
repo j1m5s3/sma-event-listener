@@ -13,12 +13,12 @@ CONTRACTS = {
     },
     RPCEnv.TEST: {
         ChainIds.ETH_SEPOLIA: {
-            ConfiguredContracts.SMA_FACTORY: "0xf8Ec37cbb381B23bF21EA0454CC91E7f66A382DE",
+            ConfiguredContracts.SMA_FACTORY: "0x31eca5Bba03d4b59Fc809B2231306020c5F295d5",
             ConfiguredContracts.SMA_MANAGER_ADMIN: "",
             ConfiguredContracts.SMA_ADDRESS_PROVIDER: "",
             ConfiguredContracts.SMA_ORACLE: "",
-            ConfiguredContracts.SMA_MANAGEMENT_LOGIC: "",
-            ConfiguredContracts.SMA_MANAGEMENT_REGISTRY: "0xeA28ad46c954A5d6B8C98EA31ef397EeD5317362",
+            ConfiguredContracts.SMA_MANAGEMENT_LOGIC: "0xED3Cdb25322cE3676C30Fe72Fb7604CbcB2B78eE",
+            ConfiguredContracts.SMA_MANAGEMENT_REGISTRY: "0xb85ad49B6f7640a609f22D918fca0C04B7667b21",
         }
     }
 }

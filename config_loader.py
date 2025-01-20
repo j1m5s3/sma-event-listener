@@ -3,7 +3,7 @@ from dotenv import dotenv_values, find_dotenv
 
 from utils.config_utils import select_enum_from_string
 from utils.constants.contract_addresses import CONTRACTS
-from utils.constants.enums import RPCEnv, ChainIds, RPCProviders, ConnectionTypes
+from utils.constants.enums import RPCEnv, ChainIds, RPCProviders, ConnectionTypes, Events
 
 ENV: str = os.environ.get('ENV', None)
 if ENV is None:
@@ -25,6 +25,12 @@ with open(rpc_url_json_fp, 'r') as f:
 
 RPC_URL: str = rpc_urls[CHAIN.name][RPC_PROVIDER.name][RPC_CONNECTION_TYPE.name.lower()]
 CONTRACT_ADDRESSES: dict = CONTRACTS[RPC_ENV][CHAIN]
+
+EVENT_ENV: str = os.environ.get('EVENT_ENV', None)
+if EVENT_ENV:
+    EVENT_ENV: Events = select_enum_from_string(Events, EVENT_ENV)
+
+
 
 if __name__ == '__main__':
     print(f"ENV: {ENV}")

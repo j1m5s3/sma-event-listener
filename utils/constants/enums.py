@@ -28,6 +28,7 @@ class Events(Enum):
     """
     SMACreated = 1
     ManagementStatusChanged = 2
+    InvestAction = 3
 
 class RPCProviders(Enum):
     INFURA = 1

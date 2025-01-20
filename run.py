@@ -5,7 +5,8 @@ from pywin.mfc.object import Object
 from app_logger.logger import Logger
 from config_loader import (
     RPC_URL,
-    CONTRACT_ADDRESSES
+    CONTRACT_ADDRESSES,
+    EVENT_ENV
 )
 from utils.constants.contract_events import EVENT_DEFINITIONS
 from utils.constants.enums import Events, ConfiguredContracts
@@ -43,9 +44,20 @@ def get_listener_interface(event: Events) -> BaseListenerInterface:
 
     return listener_interface
 
+async def create_tasks(events_list: list) -> None:
+    tasks: list = []
+    for event in events_list:
+        task = asyncio.create_task(get_listener_interface(event).subscribe_to_event())
+        tasks.append(task)
+
+    await asyncio.gather(*tasks)
+
 
 if __name__ == "__main__":
     logger.info(f"Running factory event listeners")
-    #event = Events.SMACreated
-    event = Events.ManagementStatusChanged
+    if EVENT_ENV and isinstance(EVENT_ENV, Events):
+        event: Events = EVENT_ENV
+    else:
+        event = Events.SMACreated
+
     asyncio.run(get_listener_interface(event).subscribe_to_event())
