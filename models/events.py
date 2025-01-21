@@ -68,7 +68,7 @@ class InvestAction(BaseEvent):
         self.sma_address = decode(["address"], self.raw_event['topics'][1])[0]
         self.base_token_address = decode(["address"], self.raw_event['topics'][2])[0]
         self.amount = decode(["uint256"], self.raw_event['topics'][3])[0]
-        self.from_protocol_address, self.to_protocol_address = decode(["address", "address"], self.raw_event['data'])[0]
+        self.from_protocol_address, self.to_protocol_address = decode(["address", "address"], self.raw_event['data'])
 
         return self
 

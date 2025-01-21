@@ -13,6 +13,7 @@ from utils.constants.enums import Events, ConfiguredContracts
 from interfaces.contract_event_listeners.base.base_listener_interface import BaseListenerInterface
 from interfaces.contract_event_listeners.factory_listener_interface import SMAFactoryListenerInterface
 from interfaces.contract_event_listeners.management_registry_listener_interface import SMAManagementRegistryListenerInterface
+from interfaces.contract_event_listeners.management_logic_listener_interface import SMAManagementLogicListenerInterface
 
 logger: Logger = Logger(section_name=f"{__name__}")
 
@@ -36,6 +37,13 @@ def get_listener_interface(event: Events) -> BaseListenerInterface:
         listener_interface: SMAManagementRegistryListenerInterface = SMAManagementRegistryListenerInterface(
             ws_uri=RPC_URL,
             contract_address=CONTRACT_ADDRESSES[ConfiguredContracts.SMA_MANAGEMENT_REGISTRY],
+            event_abi=EVENT_DEFINITIONS[event],
+            event_name=event.name
+        )
+    elif event in [Events.InvestAction]:
+        listener_interface: SMAManagementLogicListenerInterface = SMAManagementLogicListenerInterface(
+            ws_uri=RPC_URL,
+            contract_address=CONTRACT_ADDRESSES[ConfiguredContracts.SMA_MANAGEMENT_LOGIC],
             event_abi=EVENT_DEFINITIONS[event],
             event_name=event.name
         )
